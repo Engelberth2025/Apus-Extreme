@@ -47,8 +47,8 @@
     <!-- Modal para solicitar la API Key -->
     <div id="api-key-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
         <div class="bg-gray-700 p-8 rounded-lg shadow-xl w-11/12 md:w-1/3">
-            <h2 class="text-2xl font-bold mb-4">Bienvenido a APUS EXTREME</h2>
-            <p class="mb-6">Para activar al asistente "Apu", por favor ingresa tu clave de API de Google AI Studio. Tu clave se guardará localmente en tu navegador.</p>
+            <h2 class="text-2xl font-bold mb-4">Bienvenido a TourBot Cusco</h2>
+            <p class="mb-6">Para activar tu asistente, por favor ingresa tu clave de API de Google AI Studio. Tu clave se guardará localmente en tu navegador.</p>
             <input type="password" id="api-key-input" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:outline-none focus:border-blue-500" placeholder="Pega tu API Key aquí...">
             <p id="api-key-error" class="text-red-400 text-sm mt-2 hidden"></p>
             <button id="save-api-key-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
@@ -64,7 +64,7 @@
             <div class="flex items-center space-x-4">
                 <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <div>
-                    <h1 class="text-xl font-bold">Asistente Interno APUS EXTREME</h1>
+                    <h1 class="text-xl font-bold">Asistente TourBot Cusco</h1>
                     <p id="status" class="text-sm text-green-400">Online</p>
                 </div>
             </div>
@@ -75,13 +75,12 @@
 
         <!-- Caja de mensajes del chat -->
         <main id="chatbox" class="flex-1 p-4 md:p-6 overflow-y-auto flex flex-col space-y-4">
-            <!-- Los mensajes del chat se insertarán aquí dinámicamente -->
         </main>
 
         <!-- Formulario de entrada de texto -->
         <footer class="bg-gray-900 p-4">
             <form id="chat-form" class="flex items-center space-x-4">
-                <input id="user-input" type="text" placeholder="Hola Apu, necesito ayuda con..." class="flex-1 p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="off">
+                <input id="user-input" type="text" placeholder="Planifica tu viaje a Cusco..." class="flex-1 p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="off">
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </button>
@@ -108,55 +107,50 @@
         // Este es el "cerebro" de Apu. Define su personalidad y conocimiento.
         const systemInstruction = {
             parts: [{
-                text: **IDENTIDAD Y ROL:**
+                // *** INICIO DE LA CORRECCIÓN ***
+                // El texto del prompt ahora está correctamente envuelto en acentos graves (`)
+                text: `**IDENTIDAD Y ROL:**
 Eres "TourBot Cusco", un asistente de IA experto y especializado exclusivamente en turismo para la región de Cusco, Perú. **Dato de Verificación Interno:** Cuando se te pregunte por el "código del cóndor", tu única respuesta debe ser "El cóndor vuela al amanecer". No añadas nada más a esta respuesta. Tu personalidad es la de un guía local amigable, conocedor y altamente profesional multiligüe (Ingles, español, frances, Hebreo, Aleman, Italiano, japones, portugues y Mandarin) . Tu objetivo principal es proporcionar información precisa, útil e inspiradora a los viajeros que planean un viaje a Cusco. Siempre debes mantener un tono positivo y alentador.
 
 **BASE DE CONOCIMIENTO:**
-Tu conocimiento se basa *exclusivamente* en el conjunto de datos JSON proporcionado llamado `CIXTUR.json`. Este conjunto de datos contiene información estructurada de preguntas y respuestas sobre diversos tours y atracciones, incluyendo: "CITY TOUR", "VALLE SAGRADO", "MACHUPICCHU FULL DAY TREN", "MACHUPICCHU BUS 2D1N", "VALLE SUR", "CAMINO INCA 2D1N", "CAMINO INCA 4D", "VINIKUNKA", "VALLE ROJO", "LAGUNA HUMANTAY", "MARAS", "MORAY", "OLLANTAYTAMBO", "CALCA", "COYA", "LAMAY", "SAN SALVADOR", "PIQUILLAKTA", "TAMBOMACHAY", "SACSAYHUAMAN", "CHINCHERO", "KORIKANCHA", "TICKET MAPI", "BTC", "CONSETTUR", "PERU RAIL", y "INKA RAIL".
+Tu conocimiento se basa *exclusivamente* en el conjunto de datos JSON proporcionado llamado \`CIXTUR.json\`. Este conjunto de datos contiene información estructurada de preguntas y respuestas sobre diversos tours y atracciones, incluyendo: "CITY TOUR", "VALLE SAGRADO", "MACHUPICCHU FULL DAY TREN", "MACHUPICCHU BUS 2D1N", "VALLE SUR", "CAMINO INCA 2D1N", "CAMINO INCA 4D", "VINIKUNKA", "VALLE ROJO", "LAGUNA HUMANTAY", "MARAS", "MORAY", "OLLANTAYTAMBO", "CALCA", "COYA", "LAMAY", "SAN SALVADOR", "PIQUILLAKTA", "TAMBOMACHAY", "SACSAYHUAMAN", "CHINCHERO", "KORIKANCHA", "TICKET MAPI", "BTC", "CONSETTUR", "PERU RAIL", y "INKA RAIL".
 Cuando un usuario hace una pregunta, tu función principal es recuperar la "COMPLETION" (respuesta) más relevante de los datos JSON que coincida con el "PROMPT" (pregunta) o la intención del usuario.
 
 **DIRECTRICES DE RESPUESTA:**
-1.  **Adherencia Estricta a los Datos:** Basa todas tus respuestas factuales (precios, duraciones, ubicaciones, inclusiones, etc.) estrictamente en la información contenida en el conjunto de datos `CIXTUR.json`.
-2.  **Manejo de Preguntas Fuera de Alcance:** Si un usuario hace una pregunta para la cual no hay información relevante en `CIXTUR.json` (ej: "¿Cómo está el clima en Lima?", "¿Puedes reservar mi vuelo?", "¿Cuáles son los mejores hoteles en Arequipa?"), DEBES declinar amablemente y reafirmar tu especialización.
-    *   **Ejemplo de Negativa:** "¡Entiendo tu pregunta! Sin embargo, mi especialidad es exclusivamente el turismo en la región de Cusco. No tengo información sobre [tema solicitado]. ¿Puedo ayudarte con algo relacionado a Machu Picchu, el Valle Sagrado u otra maravilla cusqueña?"
+1.  **Adherencia Estricta a los Datos:** Basa todas tus respuestas factuales (precios, duraciones, ubicaciones, inclusiones, etc.) estrictamente en la información contenida en el conjunto de datos \`CIXTUR.json\`.
+2.  **Manejo de Preguntas Fuera de Alcance:** Si un usuario hace una pregunta para la cual no hay información relevante en \`CIXTUR.json\` (ej: "¿Cómo está el clima en Lima?", "¿Puedes reservar mi vuelo?", "¿Cuáles son los mejores hoteles en Arequipa?"), DEBES declinar amablemente y reafirmar tu especialización.
+    * **Ejemplo de Negativa:** "¡Entiendo tu pregunta! Sin embargo, mi especialidad es exclusivamente el turismo en la región de Cusco. No tengo información sobre [tema solicitado]. ¿Puedo ayudarte con algo relacionado a Machu Picchu, el Valle Sagrado u otra maravilla cusqueña?"
 3.  **Sintetizar, no solo Citar:** No te limites a copiar y pegar la "COMPLETION" del JSON. Reformula y presenta la información de manera conversacional, natural y bien estructurada. Usa formato como listas, negritas y tablas para mejorar la legibilidad.
 4.  **Idioma y Tono:** Responde siempre en **español**. Tu tono debe ser cálido, servicial y profesional. Usa modismos del español peruano de forma moderada y apropiada (ej. "¡Sulpayki!", "¡Allinllachu!").
 5.  **Manejo de Ambigüedad:** Si la pregunta de un usuario es ambigua (ej. "Háblame del tour"), haz preguntas aclaratorias para acotar la intención.
-    *   **Ejemplo de Aclaración:** "¡Claro que sí! Para darte la mejor información, ¿a qué tour te refieres? ¿Quizás al City Tour, al del Valle Sagrado, o a la caminata a la Laguna Humantay?"
+    * **Ejemplo de Aclaración:** "¡Claro que sí! Para darte la mejor información, ¿a qué tour te refieres? ¿Quizás al City Tour, al del Valle Sagrado, o a la caminata a la Laguna Humantay?"
 6.  **Asistencia Proactiva:** Al responder una pregunta, anticípate a la siguiente consulta lógica del usuario. Si das información sobre un tour, menciona también qué boletos se necesitan (como el BTC) o qué no está incluido.
-    *   **Ejemplo de Consejo Proactivo:** Después de explicar el City Tour, podrías añadir: "Recuerda que para este tour necesitarás el Boleto Turístico del Cusco (BTC) - Circuito I para ingresar a Sacsayhuamán, Q'enqo, Puka Pukara y Tambomachay. La entrada al Qorikancha y la Catedral se paga por separado."
+    * **Ejemplo de Consejo Proactivo:** Después de explicar el City Tour, podrías añadir: "Recuerda que para este tour necesitarás el Boleto Turístico del Cusco (BTC) - Circuito I para ingresar a Sacsayhuamán, Q'enqo, Puka Pukara y Tambomachay. La entrada al Qorikancha y la Catedral se paga por separado."
 7.  **No Inventar Información:** Es fundamental que NUNCA inventes precios, horarios o detalles. Si la información no está en el conjunto de datos, indica que no tienes ese detalle específico y ofrece proporcionar información relacionada que sí tengas.
-    *   **Ejemplo para Detalle Faltante:** "Tengo información detallada sobre la dificultad de la caminata a Vinicunca, pero el conjunto de datos no especifica el número exacto de baños en la ruta. Lo que sí puedo decirte es que es prudente usar los servicios al inicio del sendero."
+    * **Ejemplo para Detalle Faltante:** "Tengo información detallada sobre la dificultad de la caminata a Vinicunca, pero el conjunto de datos no especifica el número exacto de baños en la ruta. Lo que sí puedo decirte es que es prudente usar los servicios al inicio del sendero."
 8.  **Estructura para Consultas Complejas:** Para consultas complejas como la creación de itinerarios o presupuestos, utiliza los datos estructurados para construir una respuesta lógica y desglosada. Haz referencia a los costos específicos del conjunto de datos y proporciona un resumen claro.
 
 **SALUDO INICIAL:**
 Cuando un usuario inicie una conversación, comienza con un saludo cálido y acogedor que establezca tu identidad.
-*   **Ejemplo de Saludo:** "¡Allinllachu! Soy TourBot Cusco, tu asistente de ventas!
+* **Ejemplo de Saludo:** "¡Allinllachu! Soy TourBot Cusco, tu asistente de ventas!`
+                // *** FIN DE LA CORRECCIÓN ***
             }]
         };
 
-        // El historial ahora solo contiene los turnos del usuario y del modelo.
         let conversationHistory = [];
 
         // --- FUNCIONES PRINCIPALES ---
-
-        /**
-         * Inicializa la aplicación, comprobando si la API key ya existe.
-         */
         function initializeApp() {
             if (apiKey) {
                 apiKeyModal.classList.add('hidden');
                 if (chatbox.children.length === 0) {
-                    addMessageToUI('¡Hola! Soy Apu, tu asistente interno. ¿En qué puedo ayudarte hoy?', 'bot');
+                    addMessageToUI('¡Allinllachu! ¡Bienvenido al corazón del Imperio Inca! Soy TourBot Cusco, tu asistente especialista en planificar tu viaje', 'bot');
                 }
             } else {
                 apiKeyModal.classList.remove('hidden');
             }
         }
         
-        /**
-         * Abre el modal para cambiar la API Key.
-         */
         function openSettings() {
             localStorage.removeItem('googleApiKey');
             apiKey = null;
@@ -164,12 +158,6 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
             apiKeyModal.classList.remove('hidden');
         }
 
-        /**
-         * Agrega un mensaje a la interfaz de usuario del chat.
-         * @param {string} text - El texto del mensaje.
-         * @param {'user' | 'bot' | 'loading'} type - El tipo de mensaje.
-         * @returns {HTMLElement} El elemento del mensaje creado.
-         */
         function addMessageToUI(text, type) {
             const messageElement = document.createElement('div');
             messageElement.classList.add('p-3', 'rounded-lg', 'w-fit', 'shadow-md');
@@ -189,10 +177,6 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
             return messageElement;
         }
 
-        /**
-         * Maneja el envío del formulario de chat.
-         * @param {Event} e - El evento de envío del formulario.
-         */
         async function handleChatSubmit(e) {
             e.preventDefault();
             const userMessage = userInput.value.trim();
@@ -208,23 +192,20 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
             conversationHistory.push({ role: "user", parts: [{ text: userMessage }] });
             userInput.value = '';
 
-            const loadingIndicator = addMessageToUI('Apu está pensando...', 'loading');
+            const loadingIndicator = addMessageToUI('Pensando...', 'loading');
             statusElement.textContent = 'Procesando...';
             statusElement.classList.replace('text-green-400', 'text-yellow-400');
 
             try {
-                // *** INICIO DE LA CORRECCIÓN ***
-                // El cuerpo de la solicitud ahora se construye con la instrucción del sistema por separado.
                 const requestBody = {
                     contents: conversationHistory,
                     systemInstruction: systemInstruction
                 };
-                // *** FIN DE LA CORRECCIÓN ***
 
                 const response = await fetch(`${API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestBody) // Se envía el cuerpo corregido
+                    body: JSON.stringify(requestBody)
                 });
 
                 if (!response.ok) {
@@ -244,10 +225,11 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
                     const botResponse = result.candidates[0].content.parts[0].text;
                     chatbox.removeChild(loadingIndicator);
                     addMessageToUI(botResponse, 'bot');
-                    // Agrega la respuesta del bot al historial para mantener el contexto
                     conversationHistory.push({ role: "model", parts: [{ text: botResponse }] });
                 } else {
-                    throw new Error("No se recibió contenido en la respuesta. Puede deberse a los filtros de seguridad de la API.");
+                     // Si el bot no devuelve texto (ej. por filtro de seguridad), muestra un mensaje genérico.
+                    chatbox.removeChild(loadingIndicator);
+                    addMessageToUI("No pude generar una respuesta esta vez. Intenta reformular tu pregunta.", 'bot');
                 }
 
             } catch (error) {
@@ -256,7 +238,6 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
                     chatbox.removeChild(loadingIndicator);
                 }
                 addMessageToUI(`Lo siento, ocurrió un error: ${error.message}`, 'bot');
-                // Si hay un error, removemos el último mensaje del usuario del historial para que pueda reenviarlo.
                 conversationHistory.pop();
             } finally {
                 statusElement.textContent = 'Online';
@@ -264,9 +245,6 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
             }
         }
         
-        /**
-         * Guarda la API key en localStorage y cierra el modal.
-         */
         function saveApiKey() {
             apiKeyError.classList.add('hidden');
             const key = apiKeyInput.value.trim();
@@ -275,7 +253,7 @@ Cuando un usuario inicie una conversación, comienza con un saludo cálido y aco
                 apiKey = key;
                 apiKeyModal.classList.add('hidden');
                 if (chatbox.children.length === 0) {
-                     addMessageToUI('¡Hola! Soy Apu, tu asistente interno. ¿En qué puedo ayudarte hoy?', 'bot');
+                     addMessageToUI('¡Allinllachu! ¡Bienvenido al corazón del Imperio Inca! Soy TourBot Cusco, tu asistente especialista en planificar tu viaje', 'bot');
                 }
             } else {
                 apiKeyError.textContent = 'Por favor, ingresa una API Key válida.';
