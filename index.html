@@ -107,7 +107,6 @@
 
         // Este es el "cerebro" de Apu. Define su personalidad y conocimiento.
         const systemInstruction = {
-            role: "system",
             parts: [{
                 text: `Eres "Apu", el asistente experto interno de APUS EXTREME, un coworking de vanguardia en Cusco, Perú. Tu única función es ayudar al personal de las 5 empresas que operan aquí. Tu conocimiento es específico y profesional. Las empresas son:
                 1.  **Apus Aventura:** Especialistas en trekking, rafting, escalada y tours de alta montaña.
@@ -126,7 +125,8 @@
             }]
         };
 
-        let conversationHistory = [systemInstruction];
+        // El historial ahora solo contiene los turnos del usuario y del modelo.
+        let conversationHistory = [];
 
         // --- FUNCIONES PRINCIPALES ---
 
@@ -203,10 +203,18 @@
             statusElement.classList.replace('text-green-400', 'text-yellow-400');
 
             try {
+                // *** INICIO DE LA CORRECCIÓN ***
+                // El cuerpo de la solicitud ahora se construye con la instrucción del sistema por separado.
+                const requestBody = {
+                    contents: conversationHistory,
+                    systemInstruction: systemInstruction
+                };
+                // *** FIN DE LA CORRECCIÓN ***
+
                 const response = await fetch(`${API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: conversationHistory })
+                    body: JSON.stringify(requestBody) // Se envía el cuerpo corregido
                 });
 
                 if (!response.ok) {
@@ -215,7 +223,7 @@
                     
                     if (response.status === 400 && friendlyErrorMessage.includes("API key not valid")) {
                         friendlyErrorMessage = "Tu API Key no es válida o ha expirado. Por favor, ingresa una nueva.";
-                        openSettings(); // Abre el modal para que el usuario la corrija.
+                        openSettings(); 
                     }
                     throw new Error(friendlyErrorMessage);
                 }
@@ -226,6 +234,7 @@
                     const botResponse = result.candidates[0].content.parts[0].text;
                     chatbox.removeChild(loadingIndicator);
                     addMessageToUI(botResponse, 'bot');
+                    // Agrega la respuesta del bot al historial para mantener el contexto
                     conversationHistory.push({ role: "model", parts: [{ text: botResponse }] });
                 } else {
                     throw new Error("No se recibió contenido en la respuesta. Puede deberse a los filtros de seguridad de la API.");
@@ -237,6 +246,8 @@
                     chatbox.removeChild(loadingIndicator);
                 }
                 addMessageToUI(`Lo siento, ocurrió un error: ${error.message}`, 'bot');
+                // Si hay un error, removemos el último mensaje del usuario del historial para que pueda reenviarlo.
+                conversationHistory.pop();
             } finally {
                 statusElement.textContent = 'Online';
                 statusElement.classList.replace('text-yellow-400', 'text-green-400');
@@ -277,5 +288,3 @@
     </script>
 </body>
 </html>
-
-
